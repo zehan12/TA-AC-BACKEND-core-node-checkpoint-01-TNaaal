@@ -42,36 +42,22 @@ function handelRequest( req,res ){
             fs.createReadStream('about.html').pipe(res);
         } 
 
-        let css = path.join(__dirname,'/styelsheet/style.css')
-        console.log(css);
-        "/Users/zehan/Desktop/altcampus/Node.js/checkpoint/TA-AC-BACKEND-core-node-checkpoint-01-TNaaal/block-BNaaep/stylesheets/style.css"
-        "/Users/zehan/Desktop/altcampus/Node.js/checkpoint/TA-AC-BACKEND-core-node-checkpoint-01-TNaaal/block-BNaaep/stylesheet"
+
         //! handel routes for CSS stylesheet attached to index and about page
         if ( req.method === 'GET' && req.url.split(".").pop() === "css" ) {
             //* set header for css file
-            // res.setHeader("Content-Type", "text/css");
-            //* read css file and send it in response and handel err (if any)
-                // fs.readFile(css, (err, content) => {
-                //     if (err) res.end(err);
-                //     res.writeHead(200, {'Content-Type': 'text/css'});
-                //     res.write(content);
-                //     res.end();
-                // });
+            //* read css file and send it in response
                 res.setHeader('Content-Type', 'text/css');
-                fs.createReadStream(css).pipe(res);
+                fs.createReadStream(__dirname+"/stylesheet/style.css").pipe(res);
         }
 
+        var img = path.join(__dirname,"/assets/")
         //! handel routes for images in assets folder
         if (  req.url.split('.').pop() === 'png' || req.url.split('.').pop() === 'jpg' ) {
             //* set header for image file
             res.setHeader('Content-Type',`image/png`);
             // //* read the image send to response
-            // fs.createReadStream(__dirname + '/media').pipe(res);
-            fs.readFile('assets', ( err, content )=>{
-                if (err) return res.write(err);
-                res.write(content);
-                res.end();
-            });
+            fs.createReadStream(__dirname + '/assets/index.png').pipe(res);
         }
 
         //! handel POST request on form and data come from contact
